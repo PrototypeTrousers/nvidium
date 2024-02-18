@@ -3,24 +3,24 @@ package me.cortex.nvidium;
 import me.cortex.nvidium.gl.RenderDevice;
 import me.cortex.nvidium.managers.AsyncOcclusionTracker;
 import me.cortex.nvidium.managers.SectionManager;
+import me.cortex.nvidium.sodiumCompat.NvidiumCompactChunkVertex;
 import me.cortex.nvidium.util.DownloadTaskStream;
 import me.cortex.nvidium.util.UploadingBufferStream;
 import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.jellysquid.mods.sodium.client.render.chunk.ChunkRenderMatrices;
 import me.jellysquid.mods.sodium.client.render.chunk.RenderSection;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.ChunkBuildOutput;
-import me.jellysquid.mods.sodium.client.render.chunk.vertex.format.impl.CompactChunkVertex;
 import me.jellysquid.mods.sodium.client.render.viewport.Viewport;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.texture.Sprite;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4fc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.glGetInteger;
-import static org.lwjgl.opengl.GL11.glNewList;
 import static org.lwjgl.opengl.NVXGPUMemoryInfo.GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX;
 
 public class NvidiumWorldRenderer {
@@ -48,7 +48,7 @@ public class NvidiumWorldRenderer {
 
         update_allowed_memory();
         //this.sectionManager = new SectionManager(device, max_geometry_memory*1024*1024, uploadStream, 150, 24, CompactChunkVertex.STRIDE);
-        this.sectionManager = new SectionManager(device, max_geometry_memory*1024*1024, uploadStream, CompactChunkVertex.STRIDE, this);
+        this.sectionManager = new SectionManager(device, max_geometry_memory*1024*1024, uploadStream, NvidiumCompactChunkVertex.STRIDE, this);
         this.renderPipeline = new RenderPipeline(device, uploadStream, downloadStream, sectionManager);
 
 
@@ -157,5 +157,9 @@ public class NvidiumWorldRenderer {
         } else {
             return new Sprite[0];
         }
+    }
+
+    public void setTransformation(int id, Matrix4fc transform) {
+        this.renderPipeline.setTransformation(id, transform);
     }
 }

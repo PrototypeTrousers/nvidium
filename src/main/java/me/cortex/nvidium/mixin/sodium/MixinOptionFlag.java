@@ -6,12 +6,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(value = OptionFlag.class, remap = false)
 public class MixinOptionFlag {
-    @Shadow
     @Final
     @Mutable
     private static OptionFlag[] $VALUES = ArrayUtils.addAll(MixinOptionFlag.$VALUES, NvidiumOptionFlags.REQUIRES_SHADER_RELOAD);
