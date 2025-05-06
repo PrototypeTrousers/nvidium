@@ -13,13 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Window.class)
 public class MixinWindow {
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void headInit(WindowEventHandler eventHandler, MonitorTracker monitorTracker, WindowSettings settings, String videoMode, String title, CallbackInfo ci) {
-        Nvidium.preWindowInit();
-    }
-
-    @Inject(method = "<init>", at = @At("TAIL"))
     private void init(WindowEventHandler eventHandler, MonitorTracker monitorTracker, WindowSettings settings, String videoMode, String title, CallbackInfo ci) {
         Nvidium.checkSystemIsCapable();
-        Nvidium.setupGLDebugCallback();
     }
 }

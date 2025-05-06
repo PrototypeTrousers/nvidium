@@ -48,8 +48,6 @@ public class Nvidium {
     // use this to then do a rasterizing check on the terrain and remove
     // the oldest regions and sections
 
-    //TODO: ADD LODS
-
     public static void checkSystemIsCapable() {
         var cap = GL.getCapabilities();
         boolean supported = cap.GL_NV_mesh_shader &&
@@ -73,14 +71,5 @@ public class Nvidium {
             LOGGER.info("Enabling Nvidium (Acedium)");
         }
         IS_ENABLED = IS_COMPATIBLE;
-    }
-
-
-    public static void setupGLDebugCallback() {
-
-    }
-
-    public static void preWindowInit() {
-
     }
 }
